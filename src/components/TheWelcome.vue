@@ -8,7 +8,7 @@ const conf = new Configuration({
 
 const openai = new OpenAIApi(conf);
 
-const text = ref("blah");
+const text = ref("");
 const messages: Ref<ChatCompletionRequestMessage[]>= ref([])
 
 const updatedMessages = computed({ 
