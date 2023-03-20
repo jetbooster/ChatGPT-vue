@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import Message from './Message.vue'
-import {Configuration,OpenAIApi, type ChatCompletionRequestMessage,ChatCompletionRequestMessageRoleEnum, ChatCompletionResponseMessageRoleEnum} from 'openai';
+import Message from './ChatMessage.vue'
+import {Configuration,OpenAIApi, type ChatCompletionRequestMessage, ChatCompletionResponseMessageRoleEnum} from 'openai';
 import { ref, computed, type Ref } from 'vue';
 const conf = new Configuration({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY
 });
 
 const openai = new OpenAIApi(conf);
-
-const wait = (ms:number) => new Promise((res)=>{setTimeout(res,ms)})
 
 const text = ref("blah");
 const messages: Ref<ChatCompletionRequestMessage[]>= ref([])
@@ -38,7 +36,7 @@ const submit = async () =>{
   const promise = openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     messages:[
-      {role:"system",content: 'You are a snarky assistant that responds in the style of a reddit comment.'},
+      {role:"system",content: 'You are a system to generate interesting sounding sci-fi stories given a prompt'},
       ...updatedMessages.value
     ]
   })
@@ -76,11 +74,11 @@ const submit = async () =>{
 
 .chatarea {
   border: 1px solid black;
-  background-color: #eee;
+  background-color: #f6f6f6;
 }
 
 .messagewindow {
-  height: 400px;
+  height: 700px;
   overflow-y: auto;
 }
 

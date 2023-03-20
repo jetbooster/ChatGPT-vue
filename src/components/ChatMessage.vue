@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {computed} from 'vue';
 import {parse} from 'marked';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 const props = defineProps({
     text: {type:String,required:true},
     role: {type:String,required:true}
@@ -14,7 +15,8 @@ const markdownToHTML = computed(()=>parse(props.text))
 </script>
 
 <template>
-    <div class="bubble" v-html="markdownToHTML" />
+    <PulseLoader v-if="props.text === '...'" class="bubble" />
+    <div class="bubble" v-else v-html="markdownToHTML"></div>
 </template>
 
 <style>
