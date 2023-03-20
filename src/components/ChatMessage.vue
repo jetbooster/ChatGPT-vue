@@ -7,7 +7,8 @@ const props = defineProps({
     role: {type:String,required:true}
 })
 
-const bgColour = props.role==="user"?'#494':'#eef'
+const bgColour = props.role==="user"?'#494':props.text === "Hello! Type your message to ChatGPT"?"#efefef":'#eef'
+
 const marginLeft = "6px 6px 6px 50px";
 const marginRight = "6px 50px 6px 6px";
 const margin = props.role==="user"?marginLeft:marginRight;

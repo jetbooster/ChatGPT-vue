@@ -9,6 +9,7 @@ const conf = new Configuration({
 const openai = new OpenAIApi(conf);
 
 const text = ref("");
+const system = ref("You are a system to generate interesting sounding sci-fi stories given a prompt");
 const messages: Ref<ChatCompletionRequestMessage[]>= ref([])
 
 const updatedMessages = computed({ 
@@ -19,6 +20,10 @@ const updatedMessages = computed({
     messages.value = val;
   }
 })
+
+const clear = ()=>{
+  messages.value = []
+}
 
 const submit = async () =>{
   if (text.value === ""){
@@ -36,7 +41,7 @@ const submit = async () =>{
   const promise = openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     messages:[
-      {role:"system",content: 'You are a system to generate interesting sounding sci-fi stories given a prompt'},
+      {role:"system",content: system.value},
       ...updatedMessages.value
     ]
   })
@@ -57,6 +62,10 @@ const submit = async () =>{
 </script>
 
 <template>
+  <div style="display:flex">
+    <input style="padding:2px;margin:3px 0px;flex:8" v-model="system" type="text" label="test" placeholder="Enter a role for chatgpt to play. common format is 'you are a...'" cols="40"/>
+    <button class="button" @click="clear">Clear Convo</button>
+  </div>
   <div class="chatarea">
     <div class="messagewindow">
       <Message v-if="updatedMessages.length===0" text="Hello! Type your message to ChatGPT" role="Assistant"/>
